@@ -14,6 +14,15 @@ class App extends Component {
     isLoading: false,
     isError: false,
     isEnd: false,
+    showModal: false,
+    selectedImage: null,
+  };
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  handleImageClick = image => {
+    this.setState({ selectedImage: image, showModal: true });
   };
 
   async componentDidUpdate(_prevProps, prevState) {
@@ -80,7 +89,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading, isError, isEnd } = this.state;
+    const { images, isLoading, isError, isEnd, } = this.state;
     return (
       <div className={styles.App}>
         <SearchBar onSubmit={this.handleSearchSubmit} />
