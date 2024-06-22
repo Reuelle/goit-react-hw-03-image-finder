@@ -32,7 +32,7 @@ class App extends Component {
     const { searchQuery, currentPage } = this.state;
     try {
       const response = await getAPI(searchQuery, currentPage);
-      console.log(response);
+      console.log('Fetched images:', response.hits); // Add this line
       const { totalHits, hits } = response;
       this.setState(prevState => ({
         images: currentPage === 1 ? hits : [...prevState.images, ...hits],
@@ -48,21 +48,20 @@ class App extends Component {
       alert(`An error occurred while fetching data: ${error}`);
     }
   };
-
+  
   handleSearchSubmit = query => {
     const normalizedQuery = query.trim().toLowerCase();
-    const { searchQuery } = this.state;
-
     if (normalizedQuery === '') {
       alert('Empty string is not a valid search query. Please type again.');
       return;
     }
-
-    if (normalizedQuery === searchQuery.toLowerCase()) {
+  
+    if (normalizedQuery === this.state.searchQuery) {
       alert('Search query is the same as the previous one. Please provide a new search query.');
       return;
     }
-
+  
+    console.log('Search query submitted:', normalizedQuery); // Add this line
     this.setState({
       searchQuery: normalizedQuery,
       currentPage: 1,
@@ -70,6 +69,7 @@ class App extends Component {
       isEnd: false,
     });
   };
+  
 
   handleLoadMore = () => {
     if (!this.state.isEnd) {
