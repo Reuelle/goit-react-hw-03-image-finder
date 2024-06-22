@@ -89,7 +89,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading, isError, isEnd, } = this.state;
+    const { images, isLoading, isError, isEnd, showModal, selectedImage} = this.state;
     return (
       <div className={styles.App}>
         <SearchBar onSubmit={this.handleSearchSubmit} />
