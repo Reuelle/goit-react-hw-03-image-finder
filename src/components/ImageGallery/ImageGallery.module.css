@@ -28,6 +28,6 @@
   }
   
   .galleryItem:hover img {
-    transform: scale(1.05);
+    transform: scale(2.05);
     border: 3px solid #ff85a2;
   }
