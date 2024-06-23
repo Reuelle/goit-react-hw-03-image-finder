@@ -5,6 +5,7 @@ import SearchBar from './SearchBar/SearchBar';
 import { getAPI } from 'pixabay-api';
 import Button from './Button/Button';
 import styles from './App.module.css';
+import Modal from './Modal/Modal';
 
 class App extends Component {
   state = {
