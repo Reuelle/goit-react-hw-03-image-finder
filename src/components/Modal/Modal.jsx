@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Modal.module.css'; // Make sure to create a corresponding CSS module
+import styles from './Modal.module.css';
 
 class Modal extends Component {
   static propTypes = {
     image: PropTypes.string.isRequired,
-    tags: PropTypes.string,
     onClose: PropTypes.func.isRequired,
   };
 
@@ -23,21 +22,21 @@ class Modal extends Component {
     }
   };
 
-  handleBackdropClick = e => {
-    if (e.currentTarget === e.target) {
+  handleBackdropClick = event => {
+    if (event.currentTarget === event.target) {
       this.props.onClose();
     }
   };
 
   render() {
-    const { image, tags } = this.props;
+    const { image } = this.props;
     return (
       <div className={styles.overlay} onClick={this.handleBackdropClick}>
         <div className={styles.modal}>
           <button type="button" className={styles.closeButton} onClick={this.props.onClose}>
             &times;
           </button>
-          <img src={image} alt={tags} />
+          <img src={image} alt="Modal" />
         </div>
       </div>
     );
