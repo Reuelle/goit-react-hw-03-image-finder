@@ -1,35 +1,34 @@
-import React, { Component } from "react";
-import styles from './SearchBar.module.css';
+import React, { Component } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
+import styles from './SearchBar.module.css';
 
 class SearchBar extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    query: PropTypes.string,
   };
 
-  state = { query: '' };
-
-  handleChange = event => {
-    this.setState({ query: event.target.value });
+  state = {
+    query: this.props.query || '',
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const { query } = this.state;
-    if (query.trim() === '') {
-      alert('Please enter a search query.');
-      return;
-    }
-    this.props.onSubmit(query);
+  handleChange = (e) => {
+    this.setState({ query: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };
 
   render() {
     return (
-      <header className={styles.SearchBar}>
+      <header className={styles.searchbar}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <button type="submit" className={styles.button}>
-            <span className={styles.buttonLabel}>Search</span>
+            <FaSearch className={styles.icon} />
           </button>
           <input
             className={styles.input}
@@ -47,4 +46,3 @@ class SearchBar extends Component {
 }
 
 export default SearchBar;
-
