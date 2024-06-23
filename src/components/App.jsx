@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import SearchBar from './SearchBar/SearchBar';
 import { getAPI } from 'pixabay-api';
 import Button from './Button/Button';
-import styles from './App.module.css';
 import Modal from './Modal/Modal';
+import styles from './App.module.css';
 
 class App extends Component {
   state = {
@@ -18,6 +18,7 @@ class App extends Component {
     showModal: false,
     selectedImage: null,
   };
+
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
@@ -42,7 +43,7 @@ class App extends Component {
     const { searchQuery, currentPage } = this.state;
     try {
       const response = await getAPI(searchQuery, currentPage);
-      console.log('Fetched images:', response.hits); // Add this line
+      console.log('Fetched images:', response.hits);
       const { totalHits, hits } = response;
       this.setState(prevState => ({
         images: currentPage === 1 ? hits : [...prevState.images, ...hits],
@@ -58,20 +59,20 @@ class App extends Component {
       alert(`An error occurred while fetching data: ${error}`);
     }
   };
-  
+
   handleSearchSubmit = query => {
     const normalizedQuery = query.trim().toLowerCase();
     if (normalizedQuery === '') {
       alert('Empty string is not a valid search query. Please type again.');
       return;
     }
-  
+
     if (normalizedQuery === this.state.searchQuery) {
       alert('Search query is the same as the previous one. Please provide a new search query.');
       return;
     }
-  
-    console.log('Search query submitted:', normalizedQuery); // Add this line
+
+    console.log('Search query submitted:', normalizedQuery);
     this.setState({
       searchQuery: normalizedQuery,
       currentPage: 1,
@@ -79,7 +80,6 @@ class App extends Component {
       isEnd: false,
     });
   };
-  
 
   handleLoadMore = () => {
     if (!this.state.isEnd) {
@@ -89,17 +89,26 @@ class App extends Component {
     }
   };
 
+  handleBackdropClick = event => {
+    if (event.currentTarget === event.target) {
+      this.toggleModal();
+    }
+  };
+
   render() {
-    const { images, isLoading, isError, isEnd, showModal, selectedImage} = this.state;
+    const { images, isLoading, isError, isEnd, showModal, selectedImage } = this.state;
     return (
       <div className={styles.App}>
         <SearchBar onSubmit={this.handleSearchSubmit} />
-        <ImageGallery images={images} />
+        <ImageGallery images={images} onImageClick={this.handleImageClick} />
         {isLoading && <Loader />}
         {!isLoading && !isError && images.length > 0 && !isEnd && (
           <Button onClick={this.handleLoadMore} />
         )}
         {isError && <p>Something went wrong. Please try again later.</p>}
+        {showModal && (
+          <Modal image={selectedImage} onClose={this.toggleModal} />
+        )}
       </div>
     );
   }
