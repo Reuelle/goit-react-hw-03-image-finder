@@ -3,15 +3,20 @@
     padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.form {
     display: flex;
-    align-items: center;
+    align-items: center; /* Align items vertically */
+}
+
+.form {
+    flex-grow: 1; /* Grow to take remaining space */
+    display: flex;
+    align-items: center; /* Align items vertically */
     border: 2px solid #ff85a2;
     border-radius: 5px;
     overflow: hidden;
 }
-.input{
+
+.input {
     flex-grow: 1;
     padding: 10px;
     border: none;
@@ -19,6 +24,7 @@
     color: #333;
     background-color: #ffffff;
 }
+
 .button {
     padding: 10px 15px;
     border: none;
@@ -26,13 +32,14 @@
     color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s;
-    display: block;
     height: 40px;
 }
+
 .button:hover {
     background-color: #f0f8ff;
     color: #ff85a2;
 }
+
 .buttonLabel {
     font-weight: bold;
 }
