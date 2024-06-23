@@ -8,7 +8,7 @@
 .form {
   display: flex;
   align-items: center;
-  border: 2px solid #ff85a2;
+  border: 2px solid #1841BE;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -25,7 +25,7 @@
 .button {
   padding: 10px 15px;
   border: none;
-  background-color: #ff85a2; /* Soft pink */
+  background-color: #1841BE; /* Soft pink */
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -35,7 +35,7 @@
 
 .button:hover {
   background-color: #f0f8ff; /* Light blue on hover */
-  color: #ff85a2; /* Pink text */
+  color: #1841BE; /* Pink text */
 }
 
 .buttonLabel {
