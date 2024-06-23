@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
-import { FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import styles from './SearchBar.module.css';
+import styles from './Searchbar.module.css';
 
 class SearchBar extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    query: PropTypes.string,
   };
 
-  state = {
-    query: this.props.query || '',
+  state = { query: '' };
+
+  handleChange = event => {
+    this.setState({ query: event.target.value });
   };
 
-  handleChange = (e) => {
-    this.setState({ query: e.target.value });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };
@@ -28,7 +24,7 @@ class SearchBar extends Component {
       <header className={styles.searchbar}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <button type="submit" className={styles.button}>
-            <FaSearch className={styles.icon} />
+            <span className={styles.buttonLabel}>Search</span>
           </button>
           <input
             className={styles.input}
