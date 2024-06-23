@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import SearchBar from './SearchBar/SearchBar';
+import Modal from './Modal/Modal'; // Make sure to import the Modal component
 import { getAPI } from 'pixabay-api';
 import Button from './Button/Button';
-import Modal from './Modal/Modal';
 import styles from './App.module.css';
 
 class App extends Component {
@@ -43,7 +43,7 @@ class App extends Component {
     const { searchQuery, currentPage } = this.state;
     try {
       const response = await getAPI(searchQuery, currentPage);
-      console.log('Fetched images:', response.hits);
+      console.log('Fetched images:', response.hits); // Add this line
       const { totalHits, hits } = response;
       this.setState(prevState => ({
         images: currentPage === 1 ? hits : [...prevState.images, ...hits],
@@ -72,7 +72,7 @@ class App extends Component {
       return;
     }
 
-    console.log('Search query submitted:', normalizedQuery);
+    console.log('Search query submitted:', normalizedQuery); // Add this line
     this.setState({
       searchQuery: normalizedQuery,
       currentPage: 1,
@@ -89,17 +89,11 @@ class App extends Component {
     }
   };
 
-  handleBackdropClick = event => {
-    if (event.currentTarget === event.target) {
-      this.toggleModal();
-    }
-  };
-
   render() {
-    const { images, isLoading, isError, isEnd, showModal, selectedImage } = this.state;
+    const { images, isLoading, isError, isEnd, showModal, selectedImage, searchQuery } = this.state;
     return (
       <div className={styles.App}>
-        <SearchBar onSubmit={this.handleSearchSubmit} />
+        <SearchBar onSubmit={this.handleSearchSubmit} query={searchQuery} />
         <ImageGallery images={images} onImageClick={this.handleImageClick} />
         {isLoading && <Loader />}
         {!isLoading && !isError && images.length > 0 && !isEnd && (
@@ -107,7 +101,11 @@ class App extends Component {
         )}
         {isError && <p>Something went wrong. Please try again later.</p>}
         {showModal && (
-          <Modal image={selectedImage} onClose={this.toggleModal} />
+          <Modal
+            image={selectedImage.largeImageURL}
+            tags={selectedImage.tags}
+            onClose={this.toggleModal}
+          />
         )}
       </div>
     );
